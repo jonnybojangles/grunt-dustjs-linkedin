@@ -13,11 +13,12 @@ Builder.prototype.build = function(task) {
   var self = this;
   var files = task.files;
   var options = task.options({
-    name: self.name,
+    templateName: self.name,
+    moduleName: self.name,
     optimizers: {},
-    wrapper: {
-      format: false
-    }
+    wrapper: false,
+    helper: 'dust',
+    dependencies: {}
   });
 
   _.each(files, function(file) {
@@ -30,7 +31,7 @@ Builder.prototype.compile = function(file, options) {
   var src = file.src;
   var dest = file.dest;
   var source = grunt.file.read(src);
-  var name = this.resultInContext(options.name, file, file, options);
+  var name = this.result(options.templateName, this, file, options);
   var dustOptimizers = dust.optimizers;
 
   dust.optimizers = _.extend(dustOptimizers, options.optimizers);
@@ -50,17 +51,21 @@ Builder.prototype.name = function(file, options) {
   return path.relative(file.orig.dest, out);
 };
 
-Builder.prototype.wrap = function(content, options) {
-  var format = options.wrapper.format;
+Builder.prototype.wrap = function(compiled, options) {
+  var format = options.wrapper;
+  var result = this.result(format, this, compiled, options) || compiled;
+
+  switch(result) {
+    case 'amd': return this.wrapper('amd', compiled, options);
+    default: return result;
+  }
+};
+
+Builder.prototype.wrapper = function(format, compiled, options) {
   var wrapped;
   var context = dust.makeBase({
-    compiled: content
+    compiled: compiled
   });
-
-  if(!format) return content;
-  if(_.isFunction(format)) return format(content, options);
-
-  format = format.toLowerCase().trim();
 
   dust.render(format, context, function(err, out) {
     if(err) self.grunt.fail.warn(err);
@@ -70,7 +75,7 @@ Builder.prototype.wrap = function(content, options) {
   return wrapped;
 };
 
-Builder.prototype.resultInContext = function(value, context) {
+Builder.prototype.result = function(value, context) {
   if(_.isFunction(value)) {
     var args = Array.prototype.slice.call(arguments, 2);
     return value.apply(context, args);
