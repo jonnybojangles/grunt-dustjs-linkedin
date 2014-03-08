@@ -48,7 +48,7 @@ Builder.prototype.name = function(file, options) {
     path.basename(file.dest, path.extname(file.dest))
   );
 
-  return path.relative(file.orig.dest, out);
+  return out.replace(file.orig.dest + path.sep, '');
 };
 
 Builder.prototype.wrap = function(compiled, options) {
