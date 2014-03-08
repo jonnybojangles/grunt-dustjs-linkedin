@@ -5,6 +5,8 @@ var util = require('util');
 
 function Builder(grunt) {
   this.grunt = grunt;
+  var amd = dust.compile(grunt.file.read(path.join(__dirname, 'amd.dust')), 'amd');
+  dust.loadSource(amd);
 }
 
 Builder.prototype.build = function(task) {
@@ -12,7 +14,10 @@ Builder.prototype.build = function(task) {
   var files = task.files;
   var options = task.options({
     name: self.name,
-    optimizers: {}
+    optimizers: {},
+    wrapper: {
+      format: false
+    }
   });
 
   _.each(files, function(file) {
@@ -29,8 +34,10 @@ Builder.prototype.compile = function(file, options) {
   var dustOptimizers = dust.optimizers;
 
   dust.optimizers = _.extend(dustOptimizers, options.optimizers);
+  var out = dust.compile(source, name);
+  dust.optimizers = dustOptimizers;
 
-  return dust.compile(source, name);
+  return this.wrap(out, options);
 };
 
 Builder.prototype.name = function(file, options) {
@@ -41,6 +48,26 @@ Builder.prototype.name = function(file, options) {
   );
 
   return path.relative(file.orig.dest, out);
+};
+
+Builder.prototype.wrap = function(content, options) {
+  var format = options.wrapper.format;
+  var wrapped;
+  var context = dust.makeBase({
+    compiled: content
+  });
+
+  if(!format) return content;
+  if(_.isFunction(format)) return format(content, options);
+
+  format = format.toLowerCase().trim();
+
+  dust.render(format, context, function(err, out) {
+    if(err) self.grunt.fail.warn(err);
+    wrapped = out;
+  });
+
+  return wrapped;
 };
 
 Builder.prototype.resultInContext = function(value, context) {
