@@ -36,7 +36,7 @@ Builder.prototype.compile = function(file, options) {
   var src = file.src;
   var dest = file.dest;
   var source = grunt.file.read(src);
-  var name = this.result(options.name, this, file, options);
+  var name = this.result(options.name, this, {file: file}, options);
   this.reset();
   dust.optimizers = _.extend(dust.optimizers, options.optimizers);
   var data = {
@@ -48,7 +48,8 @@ Builder.prototype.compile = function(file, options) {
   return this.wrap(data, options);
 };
 
-Builder.prototype.name = function(file, options) {
+Builder.prototype.name = function(data, options) {
+  var file = data.file;
   var out = path.join(
     path.dirname(file.dest),
     path.sep,

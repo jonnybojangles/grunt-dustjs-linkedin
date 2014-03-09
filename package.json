@@ -5,8 +5,18 @@
   "scripts": {
     "test": "grunt test"
   },
-  "author": "Cory Roloff",
-  "license": "MIT",
+  "author": {
+    "name": "Cory Roloff",
+    "url": "http://coryroloff.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:coryroloff/grunt-dustjs-linkedin.git"
+  },
+  "license": {
+    "name": "MIT",
+    "url": "https://github.com/coryroloff/grunt-dustjs-linkedin/blob/master/LICENSE"
+  },
   "devDependencies": {
     "grunt": "^0.4.2",
     "grunt-cli": "^0.1.13",
@@ -21,5 +31,15 @@
     "dustjs-linkedin": "^2.2.8",
     "lodash": "^2.4.1",
     "dustjs-helpers": "^1.2.0"
-  }
+  },
+  "engines": {
+    "node": ">= 0.10.0"
+  },
+  "keywords": [
+    "gruntplugin"
+  ],
+  "files": [
+    "tasks",
+    "LICENSE"
+  ]
 }
