@@ -4,6 +4,7 @@ define(["dust", "dust-helpers"], function(dust, dustHelpers) {
   return {
     render: function(context, callback) {
       if(!callback && typeof context === 'function') {
+        callback = context;
         context = {};
       }
 
@@ -30,6 +31,7 @@ define(["dust", "dust-helpers"], function(dust, dustHelpers) {
 
     stream: function(context, callback) {
       if(!callback && typeof context === 'function') {
+        callback = context;
         context = {};
       }
 
