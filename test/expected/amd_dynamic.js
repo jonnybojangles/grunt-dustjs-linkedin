@@ -3,15 +3,37 @@ define(["dust", "dust-helpers"], function(dust, dustHelpers) {
 
   return {
     render: function(context, callback) {
-      dust.render("fixtures/test", context, function(error, out) {
-        callback(error, out);
+      if(!callback && typeof context === 'function') {
+        context = {};
+      }
+
+      dust.render("fixtures/test", context, callback);
+    },
+
+    renderSync: function(context) {
+      if(!context) {
+        context = {};
+      }
+
+      var output;
+
+      dust.render("fixtures/test", context, function(error, html) {
+        if(error) {
+          throw error;
+        }
+
+        output = html;
       });
+
+      return output;
     },
 
     stream: function(context, callback) {
-      dust.stream("fixtures/test", context, function(error, out) {
-        callback(error, out);
-      });
+      if(!callback && typeof context === 'function') {
+        context = {};
+      }
+
+      dust.stream("fixtures/test", context, callback);
     }
   };
 });
