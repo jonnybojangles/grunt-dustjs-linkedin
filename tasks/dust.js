@@ -1,10 +1,12 @@
 var _ = require('lodash');
 var dust = require('dustjs-linkedin');
+var helpers = require('dustjs-helpers').helpers;
 var path = require('path');
 var util = require('util');
 
 function Builder(grunt) {
   this.grunt = grunt;
+  dust.helpers = helpers;
   var dustOptimizers = _.clone(dust.optimizers);
   dust.optimizers.format = function(ctx, node) { return node; };
   var amd = dust.compile(grunt.file.read(path.join(__dirname, 'amd.dust')), 'amd');
@@ -16,12 +18,12 @@ Builder.prototype.build = function(task) {
   var self = this;
   var files = task.files;
   var options = task.options({
-    templateName: self.name,
-    moduleName: self.name,
+    name: self.name,
     optimizers: {},
     wrapper: false,
     helper: 'dust',
-    dependencies: {}
+    dependencies: {},
+    quote: "'"
   });
 
   _.each(files, function(file) {
@@ -34,7 +36,7 @@ Builder.prototype.compile = function(file, options) {
   var src = file.src;
   var dest = file.dest;
   var source = grunt.file.read(src);
-  var name = this.result(options.templateName, this, file, options);
+  var name = this.result(options.name, this, file, options);
 
   dust.optimizers = _.extend(dust.optimizers, options.optimizers);
 
@@ -64,7 +66,14 @@ Builder.prototype.wrap = function(compiled, options) {
 Builder.prototype.wrapper = function(format, compiled, options) {
   var wrapped;
   var context = dust.makeBase({
-    compiled: compiled
+    quote: options.quote,
+    compiled: compiled,
+    dependencies: _.map(options.dependencies, function(value, key) {
+      return {
+        key: key,
+        value: value
+      };
+    })
   });
 
   dust.render(format, context, function(err, out) {

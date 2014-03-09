@@ -37,7 +37,11 @@ module.exports = function(grunt) {
 
       amd: {
         options: {
-          wrapper: 'amd'
+          wrapper: 'amd',
+          dependencies: {
+            dust: 'dust',
+            dustHelpers: 'dust-helpers'
+          }
         },
         files: {
           'tmp/amd/fixtures/test.js': ['test/fixtures/test.js.dust']
@@ -46,7 +50,11 @@ module.exports = function(grunt) {
 
       amd_dynamic: {
         options: {
-          wrapper: 'amd'
+          wrapper: 'amd',
+          dependencies: {
+            dust: 'dust',
+            dustHelpers: 'dust-helpers'
+          }
         },
         expand: true,
         cwd: 'test',
