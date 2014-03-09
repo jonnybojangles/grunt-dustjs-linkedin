@@ -33,6 +33,27 @@ module.exports = function(grunt) {
         dest: 'tmp/default_options_dynamic',
         ext: '.js',
         filter: 'isFile'
+      },
+
+      amd: {
+        options: {
+          wrapper: 'amd'
+        },
+        files: {
+          'tmp/amd/fixtures/test.js': ['test/fixtures/test.js.dust']
+        }
+      },
+
+      amd_dynamic: {
+        options: {
+          wrapper: 'amd'
+        },
+        expand: true,
+        cwd: 'test',
+        src: '**/*.js.dust',
+        dest: 'tmp/amd_dynamic',
+        ext: '.js',
+        filter: 'isFile'
       }
     }
   });
