@@ -9,8 +9,10 @@ function Builder(grunt) {
   dust.helpers = helpers;
   this.dustOptimizers = _.clone(dust.optimizers);
   dust.optimizers.format = function(ctx, node) { return node; };
-  var amd = dust.compile(grunt.file.read(path.join(__dirname, 'amd.dust')), 'amd');
+  var amd = dust.compile(grunt.file.read(path.join(__dirname, 'amd-wrapper.dust')), 'amd-wrapper');
+  var defaultHelper = dust.compile(grunt.file.read(path.join(__dirname, 'dust-helper.dust')), 'dust-helper');
   dust.loadSource(amd);
+  dust.loadSource(defaultHelper);
 }
 
 Builder.prototype.build = function(task) {
@@ -20,6 +22,7 @@ Builder.prototype.build = function(task) {
     name: self.name,
     optimizers: {},
     wrapper: false,
+    helper: false,
     dependencies: {}
   });
 
@@ -36,7 +39,13 @@ Builder.prototype.compile = function(file, options) {
   var name = this.result(options.name, this, file, options);
   this.reset();
   dust.optimizers = _.extend(dust.optimizers, options.optimizers);
-  return this.wrap(dust.compile(source, name), options);
+  var data = {
+    file: file,
+    name: name,
+    compiled: dust.compile(source, name)
+  };
+
+  return this.wrap(data, options);
 };
 
 Builder.prototype.name = function(file, options) {
@@ -49,21 +58,43 @@ Builder.prototype.name = function(file, options) {
   return out.replace(file.orig.dest + path.sep, '');
 };
 
-Builder.prototype.wrap = function(compiled, options) {
-  var format = options.wrapper;
-  var result = this.result(format, this, compiled, options) || compiled;
+Builder.prototype.wrap = function(data, options) {
+  var helper = this.result(options.helper, this, data, options) || '';
+  var helperOutput;
 
-  switch(result) {
-    case 'amd': return this.wrapper('amd', compiled, options);
-    default: return result;
+  switch(helper) {
+    case 'dust':
+      helperOutput = this.helper('dust', data, options);
+      break;
+    default:
+      helperOutput = helper;
   }
+
+  data = _.extend(data, {
+    helper: helperOutput
+  });
+
+  var wrapper = this.result(options.wrapper, this, data, options) || data.compiled;
+  var wrapperOutput;
+
+  switch(wrapper) {
+    case 'amd':
+      wrapperOutput = this.wrapper('amd', data, options);
+      break;
+    default:
+      wrapperOutput = wrapper;
+      break;
+  }
+
+  return wrapperOutput;
 };
 
-Builder.prototype.wrapper = function(format, compiled, options) {
+Builder.prototype.wrapper = function(format, data, options) {
   var wrapped;
   var context = dust.makeBase({
-    quote: options.quote,
-    compiled: compiled,
+    compiled: data.compiled,
+    name: data.name,
+    helper: data.helper,
     dependencies: _.map(options.dependencies, function(value, key) {
       return {
         key: key,
@@ -72,7 +103,29 @@ Builder.prototype.wrapper = function(format, compiled, options) {
     })
   });
 
-  dust.render(format, context, function(err, out) {
+  dust.render(format + '-wrapper', context, function(err, out) {
+    if(err) self.grunt.fail.warn(err);
+    wrapped = out;
+  });
+
+  return wrapped;
+};
+
+Builder.prototype.helper = function(format, data, options) {
+  var self = this;
+  var wrapped;
+  var context = dust.makeBase({
+    name: data.name,
+    compiled: data.compiled,
+    dependencies: _.map(options.dependencies, function(value, key) {
+      return {
+        key: key,
+        value: value
+      };
+    })
+  });
+
+  dust.render(format + '-helper', context, function(err, out) {
     if(err) self.grunt.fail.warn(err);
     wrapped = out;
   });

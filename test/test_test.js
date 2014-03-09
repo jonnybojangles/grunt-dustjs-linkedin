@@ -57,6 +57,22 @@ exports.test = {
     test.done();
   },
 
+  helper: function(test) {
+    test.expect(1);
+    var actual = grunt.file.read('tmp/helper/fixtures/test.js');
+    var expected = grunt.file.read('test/expected/helper.js');
+    test.equal(actual, expected);
+    test.done();
+  },
+
+  helper_dynamic: function(test) {
+    test.expect(1);
+    var actual = grunt.file.read('tmp/helper_dynamic/fixtures/test.js');
+    var expected = grunt.file.read('test/expected/helper_dynamic.js');
+    test.equal(actual, expected);
+    test.done();
+  },
+
   amd: function(test) {
     test.expect(1);
     var actual = grunt.file.read('tmp/amd/fixtures/test.js');
