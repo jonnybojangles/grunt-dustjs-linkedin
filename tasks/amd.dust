@@ -1,3 +1,3 @@
-define([{#dependencies}{@idx}{@ne key="{.}" value="0"}, {/ne}{/idx}{quote|s}{value|s}{quote|s}{/dependencies}], function({#dependencies}{@idx}{@ne key="{.}" value="0"}, {/ne}{/idx}{key|s}{/dependencies}) {~lb}
+define([{#dependencies}{@idx}{@ne key="{.}" value="0"}, {/ne}{/idx}"{value|s}"{/dependencies}], function({#dependencies}{@idx}{@ne key="{.}" value="0"}, {/ne}{/idx}{key|s}{/dependencies}) {~lb}
   {compiled|s}
 {~rb});

@@ -1,0 +1,13 @@
+return {~lb}
+  render: function(context, callback) {~lb}
+    dust.render("{name|s}", context, function(error, out) {~lb}
+      callback(error, out);
+    {~rb});
+  {~rb},
+
+  stream: function(context, callback) {~lb}
+    dust.stream("{name|s}", context, function(error, out) {~lb}
+      callback(error, out);
+    {~rb});
+  {~rb}
+{~rb};

@@ -7,11 +7,10 @@ var util = require('util');
 function Builder(grunt) {
   this.grunt = grunt;
   dust.helpers = helpers;
-  var dustOptimizers = _.clone(dust.optimizers);
+  this.dustOptimizers = _.clone(dust.optimizers);
   dust.optimizers.format = function(ctx, node) { return node; };
   var amd = dust.compile(grunt.file.read(path.join(__dirname, 'amd.dust')), 'amd');
   dust.loadSource(amd);
-  dust.optimizers.format = dustOptimizers.format;
 }
 
 Builder.prototype.build = function(task) {
@@ -21,9 +20,7 @@ Builder.prototype.build = function(task) {
     name: self.name,
     optimizers: {},
     wrapper: false,
-    helper: 'dust',
-    dependencies: {},
-    quote: "'"
+    dependencies: {}
   });
 
   _.each(files, function(file) {
@@ -37,9 +34,8 @@ Builder.prototype.compile = function(file, options) {
   var dest = file.dest;
   var source = grunt.file.read(src);
   var name = this.result(options.name, this, file, options);
-
+  this.reset();
   dust.optimizers = _.extend(dust.optimizers, options.optimizers);
-
   return this.wrap(dust.compile(source, name), options);
 };
 
@@ -91,6 +87,12 @@ Builder.prototype.result = function(value, context) {
   }
 
   return value;
+};
+
+Builder.prototype.reset = function() {
+  _.each(this.dustOptimizers, function(optimizer, name) {
+    dust.optimizers[name] = optimizer;
+  });
 };
 
 module.exports = function(grunt) {

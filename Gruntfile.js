@@ -35,6 +35,71 @@ module.exports = function(grunt) {
         filter: 'isFile'
       },
 
+      name: {
+        options: {
+          name: function(file, options) {
+            return 'hello_world';
+          }
+        },
+        files: {
+          'tmp/name/fixtures/test.js': ['test/fixtures/test.js.dust']
+        }
+      },
+
+      optimizers: {
+        options: {
+          optimizers: {
+            format: function(ctx, node) {
+              return node;
+            }
+          }
+        },
+        files: {
+          'tmp/optimizers/fixtures/test.js': ['test/fixtures/test.js.dust']
+        }
+      },
+
+      optimizers_dynamic: {
+        options: {
+          optimizers: {
+            format: function(ctx, node) {
+              return node;
+            }
+          }
+        },
+        expand: true,
+        cwd: 'test',
+        src: '**/*.js.dust',
+        dest: 'tmp/optimizers_dynamic',
+        ext: '.js',
+        filter: 'isFile'
+      },
+
+      wrapper: {
+        options: {
+          wrapper: function(compiled, options) {
+            return '[TEST=' + compiled + '=TEST]';
+          }
+        },
+        files: {
+          'tmp/wrapper/fixtures/test.js': ['test/fixtures/test.js.dust']
+        }
+      },
+
+      wrapper_dynamic: {
+        options: {
+          wrapper: function(compiled, options) {
+            return '[TEST=' + compiled + '=TEST]';
+          }
+        },
+        expand: true,
+        cwd: 'test',
+        src: '**/*.js.dust',
+        dest: 'tmp/wrapper_dynamic',
+        ext: '.js',
+        filter: 'isFile'
+      },
+
       amd: {
         options: {
           wrapper: 'amd',
