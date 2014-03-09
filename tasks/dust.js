@@ -11,7 +11,7 @@ function Builder(grunt) {
   dust.optimizers.format = function(ctx, node) { return node; };
   var amd = dust.compile(grunt.file.read(path.join(__dirname, 'amd.dust')), 'amd');
   dust.loadSource(amd);
-  dust.optimizers = dustOptimizers;
+  dust.optimizers.format = dustOptimizers.format;
 }
 
 Builder.prototype.build = function(task) {
