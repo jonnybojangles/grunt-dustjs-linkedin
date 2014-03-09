@@ -5,8 +5,11 @@ var util = require('util');
 
 function Builder(grunt) {
   this.grunt = grunt;
+  var dustOptimizers = _.clone(dust.optimizers);
+  dust.optimizers.format = function(ctx, node) { return node; };
   var amd = dust.compile(grunt.file.read(path.join(__dirname, 'amd.dust')), 'amd');
   dust.loadSource(amd);
+  dust.optimizers = dustOptimizers;
 }
 
 Builder.prototype.build = function(task) {
@@ -32,13 +35,10 @@ Builder.prototype.compile = function(file, options) {
   var dest = file.dest;
   var source = grunt.file.read(src);
   var name = this.result(options.templateName, this, file, options);
-  var dustOptimizers = dust.optimizers;
 
-  dust.optimizers = _.extend(dustOptimizers, options.optimizers);
-  var out = dust.compile(source, name);
-  dust.optimizers = dustOptimizers;
+  dust.optimizers = _.extend(dust.optimizers, options.optimizers);
 
-  return this.wrap(out, options);
+  return this.wrap(dust.compile(source, name), options);
 };
 
 Builder.prototype.name = function(file, options) {
