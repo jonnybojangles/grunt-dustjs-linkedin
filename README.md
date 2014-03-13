@@ -64,6 +64,7 @@ Specifies dependencies to include in the wrapper. Keys are used as the variable 
 
 ### Usage Examples
 
+**Basic Grunt configuration**
 ```js
 dust: {
   options: {
@@ -85,4 +86,33 @@ dust: {
     filter: 'isFile'
   }
 }
+```
+
+**Rendering a template with the AMD wrapper and the Dust helper**
+```js
+define(['./templates/my-template'], function(MyTemplate) {
+  /*
+   * asynchronous
+   */
+  MyTemplate.render({key: 'value'}, function(error, output) {
+
+  });
+
+  /*
+   * synchronous
+   */
+  try {
+    var output = MyTemplate.renderSync({key: 'value'});
+  }
+  catch(error) {
+
+  }
+
+  /*
+   * stream
+   */
+  MyTemplate.stream({key: 'value'}, function(error, output) {
+
+  });
+});
 ```
