@@ -56,7 +56,7 @@ Default: `false`
 Specifies if and what exports to use for the wrapper. Allowed values: `dust`. If you provide a function, then the arguments: data and options will be provided. Data will contain `file`, `name`, `compiled` and `dependencies`. The string you return will be used inside the wrapper. The dust helper will return exports with the methods `render`, `renderSync` and `stream`.
 
 #### dependencies
-Type: `Boolean|String|Function`
+Type: `Object`
 
 Default: `{}`
 
