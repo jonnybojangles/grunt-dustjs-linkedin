@@ -12,6 +12,24 @@ module.exports = {
       return Q.nfcall(dust.render, "tmp/commonjs/fixtures/test", context);
     },
 
+    renderSync: function(context) {
+      if(!context) {
+        context = {};
+      }
+
+      var output;
+
+      dust.render("tmp/commonjs/fixtures/test", context, function(error, html) {
+        if(error) {
+          throw error;
+        }
+
+        output = html;
+      });
+
+      return output;
+    },
+
     stream: function(context, callback) {
       if(!context) {
         context = {};

@@ -7,6 +7,24 @@
       return Q.nfcall(dust.render, "{name|s}", context);
     {~rb},
 
+    renderSync: function(context) {~lb}
+      if(!context) {~lb}
+        context = {~lb}{~rb};
+      {~rb}
+
+      var output;
+
+      dust.render("{name|s}", context, function(error, html) {~lb}
+        if(error) {~lb}
+          throw error;
+        {~rb}
+
+        output = html;
+      {~rb});
+
+      return output;
+    {~rb},
+
     stream: function(context, callback) {~lb}
       if(!context) {~lb}
         context = {~lb}{~rb};

@@ -113,16 +113,25 @@ define(["./templates/my-template"], function(MyTemplate) {
 var MyTemplate = require("./templates/my-template");
 
 MyTemplate.render({key: "value"})
-.then(function() {
+.then(function(output) {
 
 })
-.catch(function() {
+.catch(function(error) {
+
+})
+.done();
+
+Q.fcall(MyTemplate.renderSync, {key: "value"})
+.then(function(output) {
+
+})
+.catch(function(error) {
 
 })
 .done();
 
 MyTemplate.stream({key: "value"})
-.then(function() {
+.then(function(output) {
 
 })
 .catch(function(error) {
