@@ -91,16 +91,10 @@ dust: {
 **Rendering a template with the AMD wrapper and the Dust helper**
 ```js
 define(['./templates/my-template'], function(MyTemplate) {
-  /*
-   * asynchronous
-   */
   MyTemplate.render({key: 'value'}, function(error, output) {
 
   });
 
-  /*
-   * synchronous
-   */
   try {
     var output = MyTemplate.renderSync({key: 'value'});
   }
@@ -108,9 +102,6 @@ define(['./templates/my-template'], function(MyTemplate) {
 
   }
 
-  /*
-   * stream
-   */
   MyTemplate.stream({key: 'value'}, function(error, output) {
 
   });
