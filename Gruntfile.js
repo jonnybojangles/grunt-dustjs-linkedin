@@ -161,7 +161,7 @@ module.exports = function(grunt) {
       commonjs: {
         options: {
           wrapper: 'commonjs',
-          helper: 'dust',
+          helper: 'q',
           dependencies: {
             dust: 'dust',
             dustHelpers: 'dust-helpers'
@@ -175,7 +175,7 @@ module.exports = function(grunt) {
       commonjs_dynamic: {
         options: {
           wrapper: 'commonjs',
-          helper: 'dust',
+          helper: 'q',
           dependencies: {
             dust: 'dust',
             dustHelpers: 'dust-helpers'

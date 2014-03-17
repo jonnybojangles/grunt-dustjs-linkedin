@@ -1,0 +1,17 @@
+{~lb}
+    render: function(context) {~lb}
+      if(!context) {~lb}
+        context = {~lb}{~rb};
+      {~rb}
+
+      return Q.nfcall(dust.render, "{name|s}", context);
+    {~rb},
+
+    stream: function(context, callback) {~lb}
+      if(!context) {~lb}
+        context = {~lb}{~rb};
+      {~rb}
+
+      return Q.nfcall(dust.stream, "{name|s}", context);
+    {~rb}
+  {~rb}

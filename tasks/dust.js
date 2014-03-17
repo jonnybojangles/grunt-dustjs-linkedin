@@ -12,9 +12,11 @@ function Builder(grunt) {
   var amd = dust.compile(this.load('amd-wrapper.dust'), 'amd-wrapper');
   var commonjs = dust.compile(this.load('commonjs-wrapper.dust'), 'commonjs-wrapper');
   var defaultHelper = dust.compile(this.load('dust-helper.dust'), 'dust-helper');
+  var qHelper = dust.compile(this.load('q-helper.dust'), 'q-helper');
   dust.loadSource(amd);
   dust.loadSource(commonjs);
   dust.loadSource(defaultHelper);
+  dust.loadSource(qHelper);
 }
 
 Builder.prototype.build = function(task) {
@@ -67,7 +69,8 @@ Builder.prototype.wrap = function(data, options) {
 
   switch(helper) {
     case 'dust':
-      helperOutput = this.helper('dust', data, options);
+    case 'q':
+      helperOutput = this.helper(helper, data, options);
       break;
     default:
       helperOutput = helper;

@@ -53,7 +53,7 @@ Type: `Boolean|String|Function`
 
 Default: `false`
 
-Specifies if and what exports to use for the wrapper. Allowed values: `dust`. If you provide a function, then the arguments: data and options will be provided. Data will contain `file`, `name`, `compiled` and `dependencies`. The string you return will be used inside the wrapper. The dust helper will return exports with the methods `render`, `renderSync` and `stream`.
+Specifies if and what exports to use for the wrapper. Allowed values: `dust` and `q`. If you provide a function, then the arguments: data and options will be provided. Data will contain `file`, `name`, `compiled` and `dependencies`. The string you return will be used inside the wrapper. The dust helper will return exports with the methods `render`, `renderSync` and `stream`.
 
 #### dependencies
 Type: `Object`
@@ -68,10 +68,10 @@ Specifies dependencies to include in the wrapper. Keys are used as the variable 
 ```js
 dust: {
   options: {
-    wrapper: 'amd',
-    helper: 'dust',
+    wrapper: "amd",
+    helper: "dust",
     dependencies: {
-      dust: 'dust'
+      dust: "dust"
     },
     optimizers: {
       format: function(ctx, node) { return node; }
@@ -79,31 +79,54 @@ dust: {
   },
   build: {
     expand: true,
-    cwd: 'src',
-    src: '**/*.dust',
-    dest: 'dist',
-    ext: '.js',
-    filter: 'isFile'
+    cwd: "src",
+    src: "**/*.dust",
+    dest: "dist",
+    ext: ".js",
+    filter: "isFile"
   }
 }
 ```
 
 **Rendering a template with the AMD wrapper and the Dust helper**
 ```js
-define(['./templates/my-template'], function(MyTemplate) {
-  MyTemplate.render({key: 'value'}, function(error, output) {
+define(["./templates/my-template"], function(MyTemplate) {
+  MyTemplate.render({key: "value"}, function(error, output) {
 
   });
 
   try {
-    var output = MyTemplate.renderSync({key: 'value'});
+    var output = MyTemplate.renderSync({key: "value"});
   }
   catch(error) {
 
   }
 
-  MyTemplate.stream({key: 'value'}, function(error, output) {
+  MyTemplate.stream({key: "value"}, function(error, output) {
 
   });
 });
+```
+
+**Rendering a template with the CommonJS wrapper and the Q helper**
+```js
+var MyTemplate = require("./templates/my-template");
+
+MyTemplate.render({key: "value"})
+.then(function() {
+
+})
+.catch(function() {
+
+})
+.done();
+
+MyTemplate.stream({key: "value"})
+.then(function() {
+
+})
+.catch(function(error) {
+
+})
+.done();
 ```
