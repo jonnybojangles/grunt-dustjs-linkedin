@@ -104,7 +104,7 @@ module.exports = function(grunt) {
         options: {
           wrapper: 'amd',
           helper: function(data, options) {
-            return 'return function testHelper() {};';
+            return 'function testHelper() {}';
           }
         },
         files: {
@@ -116,7 +116,7 @@ module.exports = function(grunt) {
         options: {
           wrapper: 'amd',
           helper: function(data, options) {
-            return 'return function testHelper() {};';
+            return 'function testHelper() {}';
           }
         },
         expand: true,
@@ -154,6 +154,37 @@ module.exports = function(grunt) {
         cwd: 'test',
         src: '**/*.js.dust',
         dest: 'tmp/amd_dynamic',
+        ext: '.js',
+        filter: 'isFile'
+      },
+
+      commonjs: {
+        options: {
+          wrapper: 'commonjs',
+          helper: 'dust',
+          dependencies: {
+            dust: 'dust',
+            dustHelpers: 'dust-helpers'
+          }
+        },
+        files: {
+          'tmp/commonjs/fixtures/test.js': ['test/fixtures/test.js.dust']
+        }
+      },
+
+      commonjs_dynamic: {
+        options: {
+          wrapper: 'commonjs',
+          helper: 'dust',
+          dependencies: {
+            dust: 'dust',
+            dustHelpers: 'dust-helpers'
+          }
+        },
+        expand: true,
+        cwd: 'test',
+        src: '**/*.js.dust',
+        dest: 'tmp/commonjs_dynamic',
         ext: '.js',
         filter: 'isFile'
       }

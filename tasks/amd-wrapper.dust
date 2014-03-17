@@ -1,3 +1,5 @@
 define([{#dependencies}{@idx}{@ne key="{.}" value="0"}, {/ne}{/idx}"{value|s}"{/dependencies}], function({#dependencies}{@idx}{@ne key="{.}" value="0"}, {/ne}{/idx}{key|s}{/dependencies}) {~lb}
-  {compiled|s}{helper|s}
+  {compiled|s}{#helper}
+
+  return {helper|s};{/helper}
 {~rb});

@@ -9,9 +9,11 @@ function Builder(grunt) {
   dust.helpers = helpers;
   this.dustOptimizers = _.clone(dust.optimizers);
   dust.optimizers.format = function(ctx, node) { return node; };
-  var amd = dust.compile(grunt.file.read(path.join(__dirname, 'amd-wrapper.dust')), 'amd-wrapper');
-  var defaultHelper = dust.compile(grunt.file.read(path.join(__dirname, 'dust-helper.dust')), 'dust-helper');
+  var amd = dust.compile(this.load('amd-wrapper.dust'), 'amd-wrapper');
+  var commonjs = dust.compile(this.load('commonjs-wrapper.dust'), 'commonjs-wrapper');
+  var defaultHelper = dust.compile(this.load('dust-helper.dust'), 'dust-helper');
   dust.loadSource(amd);
+  dust.loadSource(commonjs);
   dust.loadSource(defaultHelper);
 }
 
@@ -80,7 +82,8 @@ Builder.prototype.wrap = function(data, options) {
 
   switch(wrapper) {
     case 'amd':
-      wrapperOutput = this.wrapper('amd', data, options);
+    case 'commonjs':
+      wrapperOutput = this.wrapper(wrapper, data, options);
       break;
     default:
       wrapperOutput = wrapper;
@@ -91,6 +94,7 @@ Builder.prototype.wrap = function(data, options) {
 };
 
 Builder.prototype.wrapper = function(format, data, options) {
+  var self = this;
   var wrapped;
   var context = dust.makeBase({
     compiled: data.compiled,
@@ -147,6 +151,10 @@ Builder.prototype.reset = function() {
   _.each(this.dustOptimizers, function(optimizer, name) {
     dust.optimizers[name] = optimizer;
   });
+};
+
+Builder.prototype.load = function(filename) {
+  return this.grunt.file.read(path.join(__dirname, filename));
 };
 
 module.exports = function(grunt) {

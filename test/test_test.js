@@ -87,5 +87,21 @@ exports.test = {
     var expected = grunt.file.read('test/expected/amd_dynamic.js');
     test.equal(actual, expected);
     test.done();
+  },
+
+  commonjs: function(test) {
+    test.expect(1);
+    var actual = grunt.file.read('tmp/commonjs/fixtures/test.js');
+    var expected = grunt.file.read('test/expected/commonjs.js');
+    test.equal(actual, expected);
+    test.done();
+  },
+
+  commonjs_dynamic: function(test) {
+    test.expect(1);
+    var actual = grunt.file.read('tmp/commonjs_dynamic/fixtures/test.js');
+    var expected = grunt.file.read('test/expected/commonjs_dynamic.js');
+    test.equal(actual, expected);
+    test.done();
   }
 };

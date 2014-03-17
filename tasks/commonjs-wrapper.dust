@@ -1,0 +1,5 @@
+{#dependencies}var {key|s} = require("{value|s}");
+{/dependencies}
+{compiled|s}{#helper}
+
+module.exports = {helper|s};{/helper}

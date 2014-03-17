@@ -1,6 +1,4 @@
-
-
-  return {~lb}
+{~lb}
     render: function(context, callback) {~lb}
       if(!callback && typeof context === 'function') {~lb}
         callback = context;
@@ -36,4 +34,4 @@
 
       dust.stream("{name|s}", context, callback);
     {~rb}
-  {~rb};
+  {~rb}

@@ -46,7 +46,7 @@ Type: `Boolean|String|Function`
 
 Default: `false`
 
-Specifies if and how to wrap the compiled dust template. Allowed values: `amd`. If you provide a function, then the arguments: data and options will be provided. Data will contain `file`, `name`, `helper`, `compiled` and `dependencies`. Options are a copy of the options given to the task. The string you return will be used as the final compiled output.
+Specifies if and how to wrap the compiled dust template. Allowed values: `amd` and `commonjs`. If you provide a function, then the arguments: data and options will be provided. Data will contain `file`, `name`, `helper`, `compiled` and `dependencies`. Options are a copy of the options given to the task. The string you return will be used as the final compiled output.
 
 #### helper
 Type: `Boolean|String|Function`
