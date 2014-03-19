@@ -35,7 +35,9 @@ Builder.prototype = {
       optimizers: {},
       wrapper: false,
       helper: false,
-      dependencies: {}
+      dependencies: {},
+      banner: '',
+      footer: ''
     });
     _.each(files, function(file) {
       self.grunt.file.write(file.dest, self.compile(file, options));
@@ -55,8 +57,8 @@ Builder.prototype = {
       name: name,
       compiled: dust.compile(source, name)
     };
-
-    return this.wrap(data, options);
+    var wrapped = this.wrap(data, options);
+    return options.banner + wrapped + options.footer;
   },
 
   wrapper: function(format, data, options) {

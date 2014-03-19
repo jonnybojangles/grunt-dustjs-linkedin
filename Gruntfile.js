@@ -46,6 +46,59 @@ module.exports = function(grunt) {
         }
       },
 
+      name_dynamic: {
+        options: {
+          name: function(file, options) {
+            return 'hello_world';
+          }
+        },
+        files: {
+          'tmp/name_dynamic/fixtures/test.js': ['test/fixtures/test.js.dust']
+        }
+      },
+
+      banner: {
+        options: {
+          banner: '/* <%= grunt.template.today("yyyy-mm-dd") %> */\n'
+        },
+        files: {
+          'tmp/banner/fixtures/test.js': ['test/fixtures/test.js.dust']
+        }
+      },
+
+      banner_dynamic: {
+        options: {
+          banner: '/* <%= grunt.template.today("yyyy-mm-dd") %> */\n'
+        },
+        expand: true,
+        cwd: 'test',
+        src: '**/*.js.dust',
+        dest: 'tmp/banner_dynamic',
+        ext: '.js',
+        filter: 'isFile'
+      },
+
+      footer: {
+        options: {
+          footer: '\n/* <%= grunt.template.today("yyyy-mm-dd") %> */'
+        },
+        files: {
+          'tmp/footer/fixtures/test.js': ['test/fixtures/test.js.dust']
+        }
+      },
+
+      footer_dynamic: {
+        options: {
+          footer: '\n/* <%= grunt.template.today("yyyy-mm-dd") %> */'
+        },
+        expand: true,
+        cwd: 'test',
+        src: '**/*.js.dust',
+        dest: 'tmp/footer_dynamic',
+        ext: '.js',
+        filter: 'isFile'
+      },
+
       optimizers: {
         options: {
           optimizers: {

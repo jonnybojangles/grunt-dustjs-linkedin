@@ -62,6 +62,20 @@ Default: `{}`
 
 Specifies dependencies to include in the wrapper. Keys are used as the variable names and values are used as the paths for requiring.
 
+#### banner
+Type: `String`
+
+Default: empty string
+
+Specifies a string that will be prepended to the compiled output. Template strings (e.g. <%= config.value %> will be expanded automatically.
+
+#### footer
+Type: `String`
+
+Default: empty string
+
+Specifies a string that will be appended to the compiled output. Template strings (e.g. <%= config.value %> will be expanded automatically.
+
 ### Usage Examples
 
 **Basic Grunt configuration**
