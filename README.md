@@ -153,3 +153,65 @@ MyTemplate.stream({key: "value"})
 })
 .done();
 ```
+
+## RequireJS Plugin
+
+A plugin for RequireJS is included for compiling Dust templates into the same format as the AMD wrapper. Note: The following dependencies are required: dust-full (dustjs-linkedin), text (requirejs) and optionally, q.
+
+### Options
+
+#### url
+Type: `String`
+
+Default: empty string
+
+Specifies a URL to prepend to the template's module path before requiring.
+
+#### ext
+Type: `String`
+
+Default: `.dust`
+
+Specifies the extension used for your Dust templates.
+
+#### helper
+Type: `Boolean|String|Function`
+
+Default: `false`
+
+Specifies if and what exports to use for the wrapper. Allowed values: `dust` and `q`. If you provide a function, then the arguments: data and options will be provided. Data will contain `name`. The object you return will be used inside the wrapper. The dust helper will return exports with the methods `render`, `renderSync` and `stream`.
+
+### Usage Examples
+
+**Basic Require configuration**
+```js
+require.config({
+  config: {
+    dustc: {
+      url: '',
+      ext: '.dust',
+      helper: 'dust'
+    }
+  }
+});
+```
+
+**Rendering a template with the AMD wrapper and the Dust helper**
+```js
+define(["dustc!./templates/my-template"], function(MyTemplate) {
+  MyTemplate.render({key: "value"}, function(error, output) {
+
+  });
+
+  try {
+    var output = MyTemplate.renderSync({key: "value"});
+  }
+  catch(error) {
+
+  }
+
+  MyTemplate.stream({key: "value"}, function(error, output) {
+
+  });
+});
+```
