@@ -59,7 +59,7 @@ module.exports = function(grunt) {
 
       banner: {
         options: {
-          banner: '/* <%= grunt.template.today("yyyy-mm-dd") %> */\n'
+          banner: '/* 2014-03-19 */\n'
         },
         files: {
           'tmp/banner/fixtures/test.js': ['test/fixtures/test.js.dust']
@@ -68,7 +68,7 @@ module.exports = function(grunt) {
 
       banner_dynamic: {
         options: {
-          banner: '/* <%= grunt.template.today("yyyy-mm-dd") %> */\n'
+          banner: '/* 2014-03-19 */\n'
         },
         expand: true,
         cwd: 'test',
@@ -80,7 +80,7 @@ module.exports = function(grunt) {
 
       footer: {
         options: {
-          footer: '\n/* <%= grunt.template.today("yyyy-mm-dd") %> */'
+          footer: '\n/* 2014-03-19 */'
         },
         files: {
           'tmp/footer/fixtures/test.js': ['test/fixtures/test.js.dust']
@@ -89,7 +89,7 @@ module.exports = function(grunt) {
 
       footer_dynamic: {
         options: {
-          footer: '\n/* <%= grunt.template.today("yyyy-mm-dd") %> */'
+          footer: '\n/* 2014-03-19 */'
         },
         expand: true,
         cwd: 'test',
