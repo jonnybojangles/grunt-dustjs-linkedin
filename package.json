@@ -1,6 +1,6 @@
 {
   "name": "grunt-dustjs-linkedin",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Compile DUST files to JS.",
   "scripts": {
     "test": "grunt test"
