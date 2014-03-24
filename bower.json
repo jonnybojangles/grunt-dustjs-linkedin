@@ -1,0 +1,25 @@
+{
+  "name": "grunt-dustjs-linkedin",
+  "version": "0.4.0",
+  "homepage": "https://github.com/coryroloff/grunt-dustjs-linkedin",
+  "authors": [
+    "coryroloff <cory@brothersroloff.com>"
+  ],
+  "description": "Compile DUST files to JS.",
+  "keywords": [
+    "gruntplugin"
+  ],
+  "license": "MIT",
+  "main": [
+    "dustc.js"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "tmp",
+    "tasks"
+  ]
+}
