@@ -1,7 +1,7 @@
 {
   "curly": false,
   "newcap": false,
-  "node": true
+  "node": true,
   "strict": false,
   "unused": false
 }
