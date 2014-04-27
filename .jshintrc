@@ -2,4 +2,6 @@
   "curly": false,
   "newcap": false,
   "node": true
+  "strict": false,
+  "unused": false
 }
