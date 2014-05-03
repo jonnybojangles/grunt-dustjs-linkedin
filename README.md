@@ -53,7 +53,7 @@ Type: `Boolean|String|Function`
 
 Default: `false`
 
-Specifies if and what exports to use for the wrapper. Allowed values: `dust` and `q`. If you provide a function, then the arguments: data and options will be provided. Data will contain `file`, `name`, `compiled` and `dependencies`. The string you return will be used inside the wrapper. The dust helper will return exports with the methods `render`, `renderSync` and `stream`.
+Specifies if and what exports to use for the wrapper. Allowed values: `dust`, `q` and `bluebird`. If you provide a function, then the arguments: data and options will be provided. Data will contain `file`, `name`, `compiled` and `dependencies`. The string you return will be used inside the wrapper. The dust helper will return exports with the methods `render` and `renderSync`.
 
 #### dependencies
 Type: `Object`
@@ -115,10 +115,6 @@ define(["./templates/my-template"], function(MyTemplate) {
   catch(error) {
 
   }
-
-  MyTemplate.stream({key: "value"}, function(error, output) {
-
-  });
 });
 ```
 
@@ -136,15 +132,6 @@ MyTemplate.render({key: "value"})
 .done();
 
 Q.fcall(MyTemplate.renderSync, {key: "value"})
-.then(function(output) {
-
-})
-.catch(function(error) {
-
-})
-.done();
-
-MyTemplate.stream({key: "value"})
 .then(function(output) {
 
 })
@@ -179,7 +166,7 @@ Type: `Boolean|String|Function`
 
 Default: `false`
 
-Specifies if and what exports to use for the wrapper. Allowed values: `dust` and `q`. If you provide a function, then the arguments: data and options will be provided. Data will contain `name`. The object you return will be used inside the wrapper. The dust helper will return exports with the methods `render`, `renderSync` and `stream`.
+Specifies if and what exports to use for the wrapper. Allowed values: `dust`, `q` and `bluebird`. If you provide a function, then the arguments: data and options will be provided. Data will contain `name`. The object you return will be used inside the wrapper. The dust helper will return exports with the methods `render` and `renderSync`.
 
 ### Usage Examples
 
@@ -209,9 +196,5 @@ define(["dustc!./templates/my-template"], function(MyTemplate) {
   catch(error) {
 
   }
-
-  MyTemplate.stream({key: "value"}, function(error, output) {
-
-  });
 });
 ```
