@@ -1,37 +1,35 @@
 {~lb}
-    render: function(context, callback) {~lb}
-      if(!callback && typeof context === 'function') {~lb}
-        callback = context;
-        context = {~lb}{~rb};
-      {~rb}
-
-      dust.render("{name|s}", context, callback);
-    {~rb},
-
-    renderSync: function(context) {~lb}
-      if(!context) {~lb}
-        context = {~lb}{~rb};
-      {~rb}
-
-      var output;
-
-      dust.render("{name|s}", context, function(error, html) {~lb}
-        if(error) {~lb}
-          throw error;
-        {~rb}
-
-        output = html;
-      {~rb});
-
-      return output;
-    {~rb},
-
-    stream: function(context, callback) {~lb}
-      if(!callback && typeof context === 'function') {~lb}
-        callback = context;
-        context = {~lb}{~rb};
-      {~rb}
-
-      dust.stream("{name|s}", context, callback);
+  render: function(context, callback) {~lb}
+    if(!callback && typeof context === 'function') {~lb}
+      callback = context;
+      context = {~lb}{~rb};
     {~rb}
+    dust.render("{name|s}", context || {~lb}{~rb}, callback);
+  {~rb},
+
+  renderSync: function(context) {~lb}
+    var output;
+    dust.render("{name|s}", context || {~lb}{~rb}, function(error, html) {~lb}
+      if(error) throw error;
+      output = html;
+    {~rb});
+    return output;
+  {~rb},
+
+  stream: function(context, callback) {~lb}
+    if(!callback && typeof context === 'function') {~lb}
+      callback = context;
+      context = {~lb}{~rb};
+    {~rb}
+    dust.stream("{name|s}", context || {~lb}{~rb}, callback);
+  {~rb},
+
+  streamSync: function(context) {~lb}
+    var output;
+    dust.render("{name|s}", context || {~lb}{~rb}, function(error, html) {~lb}
+      if(error) throw error;
+      output = html;
+    {~rb});
+    return output;
   {~rb}
+{~rb}

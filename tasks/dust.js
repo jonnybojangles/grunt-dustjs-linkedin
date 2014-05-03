@@ -19,7 +19,8 @@ Builder.prototype = {
       'amd-wrapper',
       'commonjs-wrapper',
       'dust-helper',
-      'q-helper'
+      'q-helper',
+      'bluebird-helper'
     ], function(name) {
       var file = path.join(__dirname, name + '.dust');
       var source = self.grunt.file.read(file);
@@ -99,6 +100,7 @@ Builder.prototype = {
     switch(helper) {
       case 'dust':
       case 'q':
+      case 'bluebird':
         helperOutput = this.helper(helper, data, options);
         break;
       default:

@@ -8,7 +8,7 @@
       dust.render("{name|s}", context || {~lb}{~rb}, callback);
       return;
     {~rb}
-    dust.renderAsync = Q.nfbind(dust.render);
+    Promise.promisifyAll(dust);
     return dust.renderAsync("{name|s}", context || {~lb}{~rb});
   {~rb},
 
@@ -30,7 +30,7 @@
       dust.stream("{name|s}", context || {~lb}{~rb}, callback);
       return;
     {~rb}
-    dust.streamAsync = Q.nfbind(dust.render);
+    Promise.promisifyAll(dust);
     return dust.streamAsync("{name|s}", context || {~lb}{~rb});
   {~rb},
 
