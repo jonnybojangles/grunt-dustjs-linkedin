@@ -36,7 +36,15 @@
     "node": ">= 0.10.0"
   },
   "keywords": [
-    "gruntplugin"
+    "grunt",
+    "gruntplugin",
+    "dust",
+    "linkedin",
+    "q",
+    "bluebird",
+    "requirejs",
+    "commonjs",
+    "amd"
   ],
   "files": [
     "tasks",
