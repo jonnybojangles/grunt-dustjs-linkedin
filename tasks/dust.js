@@ -33,6 +33,7 @@ Builder.prototype = {
     var files = task.files;
     var options = task.options({
       name: self.name,
+      resolve: self.name,
       optimizers: {},
       wrapper: false,
       helper: false,
@@ -50,7 +51,27 @@ Builder.prototype = {
     var src = file.src;
     var dest = file.dest;
     var source = grunt.file.read(src);
-    var name = this.result(options.name, this, {file: file}, options);
+    var rx = /\{>"([^"]+)"[^/]\/\}/g;
+    var match;
+    var deps = [];
+    while((match = rx.exec(source)) !== null) {
+      var partial = match[1];
+      var partialFile = {
+        dest: partial,
+        filter: file.filter,
+        orig: file.orig
+      };
+      var dep = this.result(options.resolve, this, {
+        file: partialFile
+      }, options);
+      if(!dep) continue;
+      dep = dep.split('/').slice(1).join('/');
+      var depName = dep.replace(/[^a-z0-9]/gi, '');
+      options.dependencies[depName] = dep;
+      deps.push(depName);
+    }
+    var name = this.result(options.name, this, {file: file}, options)
+    .replace(/\\/g, '/');
     this.reset();
     dust.optimizers = _.extend(dust.optimizers, options.optimizers);
     var data = {
@@ -59,6 +80,9 @@ Builder.prototype = {
       compiled: dust.compile(source, name)
     };
     var wrapped = this.wrap(data, options);
+    _.forEach(deps, function(dep) {
+      delete options.dependencies[dep];
+    });
     return options.banner + wrapped + options.footer;
   },
 
