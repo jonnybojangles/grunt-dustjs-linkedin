@@ -24,27 +24,5 @@ module.exports = {
       output = html;
     });
     return output;
-  },
-
-  stream: function(context, callback) {
-    if(callback || typeof context === 'function') {
-      if(!callback && typeof context === 'function') {
-        callback = context;
-        context = {};
-      }
-      dust.stream("fixtures/test", context || {}, callback);
-      return;
-    }
-    dust.streamAsync = Q.nfbind(dust.render);
-    return dust.streamAsync("fixtures/test", context || {});
-  },
-
-  streamSync: function(context) {
-    var output;
-    dust.stream("fixtures/test", context || {}, function(error, html) {
-      if(error) throw error;
-      output = html;
-    });
-    return output;
   }
 };

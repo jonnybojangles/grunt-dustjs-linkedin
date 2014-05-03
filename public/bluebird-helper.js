@@ -14,17 +14,6 @@ define(['bluebird', 'dust-helper'], function(Promise, dustHelper) {
 
       renderSync: function(context) {
         return helper.renderSync(context);
-      },
-
-      stream: function(context, callback) {
-        if(callback || typeof context === 'function') {
-          return helper.stream(context, callback);
-        }
-        return helper.streamAsync(context);
-      },
-
-      streamSync: function(context) {
-        return helper.streamSync(context);
       }
     };
   };

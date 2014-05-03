@@ -19,27 +19,5 @@
       output = html;
     {~rb});
     return output;
-  {~rb},
-
-  stream: function(context, callback) {~lb}
-    if(callback || typeof context === 'function') {~lb}
-      if(!callback && typeof context === 'function') {~lb}
-        callback = context;
-        context = {~lb}{~rb};
-      {~rb}
-      dust.stream("{name|s}", context || {~lb}{~rb}, callback);
-      return;
-    {~rb}
-    dust.streamAsync = Q.nfbind(dust.render);
-    return dust.streamAsync("{name|s}", context || {~lb}{~rb});
-  {~rb},
-
-  streamSync: function(context) {~lb}
-    var output;
-    dust.stream("{name|s}", context || {~lb}{~rb}, function(error, html) {~lb}
-      if(error) throw error;
-      output = html;
-    {~rb});
-    return output;
   {~rb}
 {~rb}

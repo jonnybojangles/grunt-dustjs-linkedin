@@ -17,23 +17,6 @@ define(["dust", "dust-helpers"], function(dust, dustHelpers) {
       output = html;
     });
     return output;
-  },
-
-  stream: function(context, callback) {
-    if(!callback && typeof context === 'function') {
-      callback = context;
-      context = {};
-    }
-    dust.stream("fixtures/test", context || {}, callback);
-  },
-
-  streamSync: function(context) {
-    var output;
-    dust.render("fixtures/test", context || {}, function(error, html) {
-      if(error) throw error;
-      output = html;
-    });
-    return output;
   }
 };
 });
