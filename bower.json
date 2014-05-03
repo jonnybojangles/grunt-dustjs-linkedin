@@ -11,7 +11,10 @@
   ],
   "license": "MIT",
   "main": [
-    "dustc.js"
+    "public/dust.js",
+    "public/dust-helper.js",
+    "public/q-helper.js",
+    "public/bluebird-helper.js"
   ],
   "ignore": [
     "**/.*",
