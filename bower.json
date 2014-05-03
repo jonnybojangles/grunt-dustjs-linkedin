@@ -7,7 +7,15 @@
   ],
   "description": "Compile DUST files to JS.",
   "keywords": [
-    "gruntplugin"
+    "grunt",
+    "gruntplugin",
+    "dust",
+    "linkedin",
+    "q",
+    "bluebird",
+    "requirejs",
+    "commonjs",
+    "amd"
   ],
   "license": "MIT",
   "main": [
