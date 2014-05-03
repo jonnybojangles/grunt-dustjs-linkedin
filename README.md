@@ -34,6 +34,11 @@ Type: `String|Function`
 
 Specifies the name to be used for the compiled dust template's register function. Defaults to using the destination path with no extension. If a function is provided, then the arguments: data and options will be provided. Data will contain `file`. Options are a copy of the options given to the task.
 
+#### resolve
+Type: `Boolean|Function`
+
+Resolves a module path based on a template name. Resolve is used to resolve templates included via the partial feature in DustJS. Defaults to using the default name function to resolve partial templates. If a function is provided, then the arguments: data and options will be provided. Data will contain `file`. Options are a copy of the options given to the task. Returning false will tell the task to ignore that partial.
+
 #### optimizers
 Type: `Object`
 
@@ -166,7 +171,17 @@ Type: `Boolean|String|Function`
 
 Default: `false`
 
-Specifies if and what exports to use for the wrapper. Allowed values: `dust`, `q` and `bluebird`. If you provide a function, then the arguments: data and options will be provided. Data will contain `name`. The object you return will be used inside the wrapper. The dust helper will return exports with the methods `render` and `renderSync`.
+Specifies if and what exports to use for the wrapper. Allowed values: `dust`, `q` and `bluebird`. If you provide a function, then the arguments: name will be provided. The object you return will be used inside the wrapper. The dust helper will return exports with the methods `render` and `renderSync`.
+
+#### name
+Type: `Function`
+
+Specifies the name to be used for the compiled dust template's register function. Defaults to using the destination path with no extension. If a function is provided, then the arguments: name will be provided.
+
+#### resolve
+Type: `Boolean|Function`
+
+Resolves a module path based on a template name. Resolve is used to resolve templates included via the partial feature in DustJS. Defaults to using the default name function to resolve partial templates. If a function is provided, then the arguments: name will be provided. Returning false will tell the task to ignore that partial.
 
 ### Usage Examples
 
